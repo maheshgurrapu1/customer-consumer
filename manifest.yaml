@@ -1,0 +1,9 @@
+applications:
+  - name: customer-consumer
+    path: target\customer-consumer-0.0.1-SNAPSHOT.jar
+    buildpack: https://github.com/cloudfoundry/java-buildpack.git
+    memory: 1G
+    services:
+      - customer_mysql
+    env:
+      SPRING_PROFILES_ACTIVE: prod
