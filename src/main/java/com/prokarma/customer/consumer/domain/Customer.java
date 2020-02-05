@@ -56,11 +56,6 @@ public class Customer {
   @JoinColumn(name = "addressId")
   private Address address = null;
 
-  public Customer customerNumber(String customerNumber) {
-    this.customerNumber = customerNumber;
-    return this;
-  }
-
   /**
    * Get customerNumber
    * 
@@ -77,11 +72,6 @@ public class Customer {
 
   public void setCustomerNumber(String customerNumber) {
     this.customerNumber = customerNumber;
-  }
-
-  public Customer firstName(String firstName) {
-    this.firstName = firstName;
-    return this;
   }
 
   /**
@@ -101,11 +91,6 @@ public class Customer {
     this.firstName = firstName;
   }
 
-  public Customer lastName(String lastName) {
-    this.lastName = lastName;
-    return this;
-  }
-
   /**
    * Get lastName
    * 
@@ -123,10 +108,6 @@ public class Customer {
     this.lastName = lastName;
   }
 
-  public Customer birthdate(String birthdate) {
-    this.birthdate = birthdate;
-    return this;
-  }
 
   /**
    * Get birthdate
@@ -144,10 +125,6 @@ public class Customer {
     this.birthdate = birthdate;
   }
 
-  public Customer country(String country) {
-    this.country = country;
-    return this;
-  }
 
   /**
    * Get country
@@ -166,10 +143,6 @@ public class Customer {
     this.country = country;
   }
 
-  public Customer countryCode(String countryCode) {
-    this.countryCode = countryCode;
-    return this;
-  }
 
   /**
    * Get countryCode
@@ -188,11 +161,6 @@ public class Customer {
     this.countryCode = countryCode;
   }
 
-  public Customer mobileNumber(BigDecimal mobileNumber) {
-    this.mobileNumber = mobileNumber;
-    return this;
-  }
-
   /**
    * Get mobileNumber
    * 
@@ -209,11 +177,6 @@ public class Customer {
 
   public void setMobileNumber(BigDecimal mobileNumber) {
     this.mobileNumber = mobileNumber;
-  }
-
-  public Customer email(String email) {
-    this.email = email;
-    return this;
   }
 
   /**
@@ -243,11 +206,6 @@ public class Customer {
     this.customerStatus = customerStatus;
   }
 
-  public Customer address(Address address) {
-    this.address = address;
-    return this;
-  }
-
   /**
    * Get address
    * 
@@ -255,9 +213,7 @@ public class Customer {
    **/
   @ApiModelProperty(required = true, value = "")
   @NotNull
-
   @Valid
-
   public Address getAddress() {
     return address;
   }

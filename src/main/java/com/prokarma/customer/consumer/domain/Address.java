@@ -32,11 +32,6 @@ public class Address {
   @JsonProperty("postalCode")
   private String postalCode = null;
 
-  public Address addressLine1(String addressLine1) {
-    this.addressLine1 = addressLine1;
-    return this;
-  }
-
   /**
    * Get addressLine1
    * 
@@ -53,11 +48,6 @@ public class Address {
     this.addressLine1 = addressLine1;
   }
 
-  public Address addressLine2(String addressLine2) {
-    this.addressLine2 = addressLine2;
-    return this;
-  }
-
   /**
    * Get addressLine2
    * 
@@ -72,11 +62,6 @@ public class Address {
     this.addressLine2 = addressLine2;
   }
 
-  public Address street(String street) {
-    this.street = street;
-    return this;
-  }
-
   /**
    * Get street
    * 
@@ -89,11 +74,6 @@ public class Address {
 
   public void setStreet(String street) {
     this.street = street;
-  }
-
-  public Address postalCode(String postalCode) {
-    this.postalCode = postalCode;
-    return this;
   }
 
   /**
