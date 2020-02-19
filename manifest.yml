@@ -2,7 +2,7 @@ applications:
   - name: customer-consumer
     path: target\customer-consumer-0.0.1-SNAPSHOT.jar
 #    buildpack: https://github.com/cloudfoundry/java-buildpack.git
-    memory: 0.75G
+    memory: 500MB
     services:
       - customer_mysql
     env:

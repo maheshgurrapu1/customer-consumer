@@ -32,7 +32,7 @@ public class CustomerTopicListener {
       customerAuditLogService.save(payload);
 
     } catch (Exception exception) {
-      customerErrorLogService.save(exception, payload);
+      customerErrorLogService.save(exception, payload); // Use AOP after throwwing
     }
 
   }

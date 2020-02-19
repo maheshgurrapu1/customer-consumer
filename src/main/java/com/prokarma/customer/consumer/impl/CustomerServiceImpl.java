@@ -18,7 +18,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 
   @Override
-  public void save(String customerJson) throws JsonProcessingException {
+  public void save(String customerJson) throws JsonProcessingException { // handle the exception
+                                                                         // throw RuntimeException
     Customer customer = new ObjectMapper().readValue(customerJson, Customer.class);
     customerRepository.saveAndFlush(customer);
 
