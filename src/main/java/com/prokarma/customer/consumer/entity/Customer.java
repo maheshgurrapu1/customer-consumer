@@ -15,30 +15,31 @@ import javax.validation.constraints.Size;
 public class Customer {
 
   @Id
+  @Column(name = "CUSTOMER_NUMBER")
   private String customerNumber = null;
 
-  @Column
+  @Column(name = "FIRST_NAME")
   private String firstName = null;
 
-  @Column
+  @Column(name = "LAST_NAME")
   private String lastName = null;
 
-  @Column
+  @Column(name = "BIRTHDATE")
   private String birthdate = null;
 
-  @Column
+  @Column(name = "COUNTRY")
   private String country = null;
 
-  @Column
+  @Column(name = "COUNTRY_CODE")
   private String countryCode = null;
 
-  @Column
+  @Column(name = "MOBILE_NUMBER")
   private BigDecimal mobileNumber = null;
 
-  @Column
+  @Column(name = "EMAIL")
   private String email = null;
 
-  @Column
+  @Column(name = "CUSTOMER_STATUS")
   private String customerStatus = null;
 
   @OneToOne(cascade = CascadeType.ALL)

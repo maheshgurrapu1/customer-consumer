@@ -12,18 +12,19 @@ public class Address {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "ADDRESS_ID ")
   private long addressId;
 
-  @Column
+  @Column(name = "ADDRESS_LINE1")
   private String addressLine1 = null;
 
-  @Column
+  @Column(name = "ADDRESS_LINE2")
   private String addressLine2 = null;
 
-  @Column
+  @Column(name = "STREET")
   private String street = null;
 
-  @Column
+  @Column(name = "POSTAL_CODE")
   private String postalCode = null;
 
   public String getAddressLine1() {
