@@ -1,19 +1,11 @@
-package com.prokarma.customer.consumer.domain;
+package com.prokarma.customer.consumer.entity;
 
 import java.math.BigDecimal;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Customer
@@ -23,48 +15,26 @@ import io.swagger.annotations.ApiModelProperty;
 public class Customer {
 
   @Id
-  @JsonProperty("customerNumber")
   private String customerNumber = null;
 
-  @JsonProperty("firstName")
   private String firstName = null;
 
-  @JsonProperty("lastName")
   private String lastName = null;
 
-  @JsonProperty("birthdate")
-  @JsonFormat(pattern = "DD-MM-YYYY")
   private String birthdate = null;
 
-  @JsonProperty("country")
   private String country = null;
 
-  @JsonProperty("countryCode")
   private String countryCode = null;
 
-  @JsonProperty("mobileNumber")
   private BigDecimal mobileNumber = null;
 
-  @JsonProperty("email")
   private String email = null;
 
-  @JsonProperty("customerStatus")
   private String customerStatus = null;
 
-  @JsonProperty("address")
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "addressId")
   private Address address = null;
 
-  /**
-   * Get customerNumber
-   * 
-   * @return customerNumber
-   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
-
-  @Pattern(regexp = "^[a-zA-Z0-9]+$")
   @Size(min = 5, max = 50)
   public String getCustomerNumber() {
     return customerNumber;
@@ -73,14 +43,6 @@ public class Customer {
   public void setCustomerNumber(String customerNumber) {
     this.customerNumber = customerNumber;
   }
-
-  /**
-   * Get firstName
-   * 
-   * @return firstName
-   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
 
   @Size(min = 10, max = 50)
   public String getFirstName() {
@@ -91,14 +53,7 @@ public class Customer {
     this.firstName = firstName;
   }
 
-  /**
-   * Get lastName
-   * 
-   * @return lastName
-   **/
-  @ApiModelProperty(required = true, value = "")
   @NotNull
-
   @Size(min = 10, max = 50)
   public String getLastName() {
     return lastName;
@@ -109,14 +64,6 @@ public class Customer {
   }
 
 
-  /**
-   * Get birthdate
-   * 
-   * @return birthdate
-   **/
-  @ApiModelProperty(example = "DD-MM-YYYY", required = true, value = "")
-  @NotNull
-  @Valid
   public String getBirthdate() {
     return birthdate;
   }
@@ -124,15 +71,6 @@ public class Customer {
   public void setBirthdate(String birthdate) {
     this.birthdate = birthdate;
   }
-
-
-  /**
-   * Get country
-   * 
-   * @return country
-   **/
-  @ApiModelProperty(example = "India", required = true, value = "")
-  @NotNull
 
 
   public String getCountry() {
@@ -144,15 +82,6 @@ public class Customer {
   }
 
 
-  /**
-   * Get countryCode
-   * 
-   * @return countryCode
-   **/
-  @ApiModelProperty(example = "IN", required = true, value = "")
-  @NotNull
-
-  @Size(min = 2, max = 2)
   public String getCountryCode() {
     return countryCode;
   }
@@ -160,16 +89,6 @@ public class Customer {
   public void setCountryCode(String countryCode) {
     this.countryCode = countryCode;
   }
-
-  /**
-   * Get mobileNumber
-   * 
-   * @return mobileNumber
-   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
-
-  @Valid
 
   public BigDecimal getMobileNumber() {
     return mobileNumber;
@@ -179,15 +98,6 @@ public class Customer {
     this.mobileNumber = mobileNumber;
   }
 
-  /**
-   * User Status
-   * 
-   * @return email
-   **/
-  @ApiModelProperty(example = "abc@gmail.com", required = true, value = "User Status")
-  @NotNull
-
-  @Size(max = 50)
   public String getEmail() {
     return email;
   }
@@ -197,7 +107,6 @@ public class Customer {
   }
 
 
-  @NotNull
   public String getCustomerStatus() {
     return customerStatus;
   }
@@ -206,14 +115,7 @@ public class Customer {
     this.customerStatus = customerStatus;
   }
 
-  /**
-   * Get address
-   * 
-   * @return address
-   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
-  @Valid
+
   public Address getAddress() {
     return address;
   }
