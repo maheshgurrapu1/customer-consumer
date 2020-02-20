@@ -1,18 +1,12 @@
-package com.prokarma.customer.consumer.domain;
+package com.prokarma.customer.consumer.entity;
 
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
 
-/**
- * Address
- */
 @Entity
 public class Address {
 
@@ -20,26 +14,18 @@ public class Address {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long addressId;
 
-  @JsonProperty("addressLine1")
+  @Column
   private String addressLine1 = null;
 
-  @JsonProperty("addressLine2")
+  @Column
   private String addressLine2 = null;
 
-  @JsonProperty("street")
+  @Column
   private String street = null;
 
-  @JsonProperty("postalCode")
+  @Column
   private String postalCode = null;
 
-  /**
-   * Get addressLine1
-   * 
-   * @return addressLine1
-   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
-  @Size(max = 50)
   public String getAddressLine1() {
     return addressLine1;
   }
@@ -48,12 +34,6 @@ public class Address {
     this.addressLine1 = addressLine1;
   }
 
-  /**
-   * Get addressLine2
-   * 
-   * @return addressLine2
-   **/
-  @ApiModelProperty(value = "")
   public String getAddressLine2() {
     return addressLine2;
   }
@@ -62,12 +42,6 @@ public class Address {
     this.addressLine2 = addressLine2;
   }
 
-  /**
-   * Get street
-   * 
-   * @return street
-   **/
-  @ApiModelProperty(value = "")
   public String getStreet() {
     return street;
   }
@@ -76,14 +50,6 @@ public class Address {
     this.street = street;
   }
 
-  /**
-   * Get postalCode
-   * 
-   * @return postalCode
-   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
-  @Size(max = 5)
   public String getPostalCode() {
     return postalCode;
   }

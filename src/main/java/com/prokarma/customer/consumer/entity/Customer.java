@@ -2,14 +2,14 @@ package com.prokarma.customer.consumer.entity;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-/**
- * Customer
- */
 
 @Entity
 public class Customer {
@@ -17,22 +17,32 @@ public class Customer {
   @Id
   private String customerNumber = null;
 
+  @Column
   private String firstName = null;
 
+  @Column
   private String lastName = null;
 
+  @Column
   private String birthdate = null;
 
+  @Column
   private String country = null;
 
+  @Column
   private String countryCode = null;
 
+  @Column
   private BigDecimal mobileNumber = null;
 
+  @Column
   private String email = null;
 
+  @Column
   private String customerStatus = null;
 
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "addressId")
   private Address address = null;
 
   @Size(min = 5, max = 50)

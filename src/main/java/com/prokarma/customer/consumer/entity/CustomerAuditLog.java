@@ -1,4 +1,4 @@
-package com.prokarma.customer.consumer.domain;
+package com.prokarma.customer.consumer.entity;
 
 import java.io.Serializable;
 import javax.persistence.Column;
