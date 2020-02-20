@@ -15,9 +15,9 @@ public class CustomerErrorLogServiceImpl implements CustomerErrorLogService {
   }
 
   @Override
-  public void save(Exception exception, String payload) {
+  public void save(Throwable throwable, String payload) {
     CustomerErrorLog customerErrorLog = new CustomerErrorLog();
-    customerErrorLog.setErrorDescription(exception.getMessage());
+    customerErrorLog.setErrorDescription(throwable.getMessage());
     customerErrorLog.setErrorType("Exception");
     customerErrorLog.setPayload(payload);
 
