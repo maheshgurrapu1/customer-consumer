@@ -1,29 +1,37 @@
 package com.prokarma.customer.consumer.listener;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.kafka.test.context.EmbeddedKafka;
-import com.prokarma.customer.consumer.service.CustomerAuditLogService;
-import com.prokarma.customer.consumer.service.CustomerErrorLogService;
-import com.prokarma.customer.consumer.service.CustomerService;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
+import com.prokarma.customer.consumer.repository.CustomerAuditLogRepository;
+import com.prokarma.customer.consumer.repository.CustomerErrorLogRepository;
+import com.prokarma.customer.consumer.repository.CustomerRepository;
 
 @SpringBootTest
-@EmbeddedKafka(partitions = 1, topics = {"customer_topic"})
+@EmbeddedKafka(partitions = 1, topics = {"${kafka.customer.topic.name}"})
 class CustomerTopicListenerTest {
 
   @Autowired
   private KafkaTemplate<String, String> kafkaTemplate;
 
   @Autowired
-  private CustomerService customerService;
-
+  private CustomerRepository customerRepository;
   @Autowired
-  private CustomerAuditLogService customerAuditLogService;
-
+  private CustomerErrorLogRepository customerErrorLogRepository;
   @Autowired
-  private CustomerErrorLogService customerErrorLogService;
+  private CustomerAuditLogRepository auditLogRepository;
+
+  @Value("${kafka.customer.topic.name}")
+  private String topicName;
+
 
 
   private String validJSONPayload =
@@ -36,55 +44,53 @@ class CustomerTopicListenerTest {
           + "    \"street\": \"string\",\n" + "    \"postalCode\": \"12345\"\n" + "  }\n" + "}";
 
 
+
+  @BeforeEach
+  void clearData() {
+    customerRepository.deleteAll();
+    customerErrorLogRepository.deleteAll();
+    auditLogRepository.deleteAll();
+  }
+
   @Test
   void testValidMessage() throws InterruptedException {
-    kafkaTemplate.send("customer_topic", validJSONPayload);
+    Message<String> userMessage = MessageBuilder.withPayload(validJSONPayload)
+        .setHeader(KafkaHeaders.TOPIC, topicName).setHeader("user", "Mahesh").build();
+
+    kafkaTemplate.send(userMessage);
+
     Thread.sleep(2000);
+    assertEquals(1, customerRepository.findAll().size());
+    assertEquals(1, auditLogRepository.findAll().size());
 
   }
 
   @Test
-  void testInvalidMessage() throws InterruptedException {
-    kafkaTemplate.send("customer_topic", "Invalid Payload");
+  void testInvalidMessageWithoutUserHeader() throws InterruptedException {
+    Message<String> userMessage = MessageBuilder.withPayload("This is invalid payload")
+        .setHeader(KafkaHeaders.TOPIC, topicName).build();
+
+    kafkaTemplate.send(userMessage);
+
     Thread.sleep(2000);
 
+    assertEquals(0, customerRepository.findAll().size());
+    assertEquals(0, auditLogRepository.findAll().size());
+    assertEquals(1, customerErrorLogRepository.findAll().size());
   }
 
-  /*
-   * @Test void testInvalidMessage() throws InterruptedException { Message<String> userMessage =
-   * MessageBuilder.withPayload("This is invalid payload") .setHeader(KafkaHeaders.TOPIC,
-   * messageTopic).setHeader(userHeader, userValue).build();
-   * 
-   * kafkaTemplate.send(userMessage);
-   * 
-   * Thread.sleep(2000);
-   * 
-   * assertEquals(0, userRepository.findAll().size()); assertEquals(1,
-   * userAuditRepository.findByCustomerNumber(userValue).size()); assertEquals(1,
-   * errorAuditRepository.findByCustomerNumber(userValue).size()); }
-   * 
-   * @Test void testInvalidMessageWithoutUser() throws InterruptedException { Message<String>
-   * userMessage = MessageBuilder.withPayload("This is invalid payload")
-   * .setHeader(KafkaHeaders.TOPIC, messageTopic).build();
-   * 
-   * kafkaTemplate.send(userMessage);
-   * 
-   * Thread.sleep(2000);
-   * 
-   * assertEquals(0, userRepository.findAll().size()); assertEquals(1,
-   * userAuditRepository.findByCustomerNumber("unknown").size()); assertEquals(1,
-   * errorAuditRepository.findByCustomerNumber("unknown").size()); }
-   * 
-   * @Test void testValidMessageWithoutUser() throws InterruptedException { Message<String>
-   * userMessage = MessageBuilder.withPayload(validJSONPayload) .setHeader(KafkaHeaders.TOPIC,
-   * messageTopic).setHeader(userHeader, userValue).build();
-   * 
-   * kafkaTemplate.send(userMessage);
-   * 
-   * Thread.sleep(2000);
-   * 
-   * assertEquals(1, userService.findUsersByCustomerNumber("01234").size()); assertEquals(1,
-   * userAuditRepository.findByCustomerNumber(userValue).size()); }
-   */
+
+  @Test
+  void testValidMessageWithOutUserHeader() throws InterruptedException {
+    Message<String> userMessage = MessageBuilder.withPayload(validJSONPayload)
+        .setHeader(KafkaHeaders.TOPIC, topicName).build();
+
+    kafkaTemplate.send(userMessage);
+
+    Thread.sleep(2000);
+    assertEquals(1, customerRepository.findAll().size());
+    assertEquals(1, auditLogRepository.findAll().size());
+
+  }
 
 }
